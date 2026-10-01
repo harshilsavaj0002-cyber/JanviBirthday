@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --blush: #f8d7da;
+  --rose-gold: #b76e79;
+  --champagne: #f7e7ce;
+  --wine: #4a0e1f;
+  --cream: #fff8f0;
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    position: relative; /* framer-motion measures scroll offsets against this */
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  body {
+    @apply bg-cream font-sans text-wine;
+    overflow-x: hidden;
+  }
+  body.locked {
+    overflow: hidden;
+  }
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--rose-gold);
+    color: var(--cream);
+  }
+}
+
+@layer components {
+  /* Gold foil gradient text */
+  .text-gold {
+    background: linear-gradient(
+      100deg,
+      #8e5a2b 0%,
+      #d4a55a 18%,
+      #f7e7ce 32%,
+      #c98b6b 48%,
+      #b76e79 62%,
+      #f7e7ce 78%,
+      #a8744a 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Script swashes (J, L, G…) overhang the glyph box; pad so the gradient covers them. */
+    padding: 0.15em 0.35em 0.4em;
+    margin-inline: -0.35em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  /* Deeper rose-gold for light (cream/blush) backgrounds, where the champagne stops vanish. */
+  .text-gold-deep {
+    @apply text-gold;
+    background-image: linear-gradient(100deg, #7a4520 0%, #b0753f 25%, #9c5563 50%, #b76e79 70%, #7a3b4a 100%);
+  }
+  .text-gold-animated {
+    @apply text-gold animate-shimmer;
+  }
+
+  .glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 248, 240, 0.28));
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    @apply shadow-glass;
+  }
+  .glass-dark {
+    background: linear-gradient(135deg, rgba(74, 14, 31, 0.72), rgba(42, 7, 18, 0.6));
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(247, 231, 206, 0.16);
+    box-shadow: 0 10px 40px rgba(22, 3, 10, 0.45), inset 0 1px 0 rgba(247, 231, 206, 0.12);
+  }
+
+  .eyebrow {
+    text-wrap: balance;
+    @apply font-sans text-[11px] font-medium uppercase tracking-[0.35em] text-rose-gold sm:text-xs;
+  }
+
+  .section {
+    @apply relative mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-32;
+  }
+
+  .btn-lux {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-7 py-3.5 font-sans text-sm font-medium tracking-wide text-cream transition-transform duration-300 active:scale-95;
+    background: linear-gradient(135deg, #b76e79, #8e4a56 55%, #4a0e1f);
+    box-shadow: 0 10px 30px -8px rgba(183, 110, 121, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  .btn-lux::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.9s ease;
+  }
+  .btn-lux:hover::after {
+    transform: translateX(120%);
+  }
+  .btn-lux:focus-visible {
+    outline: 2px solid var(--champagne);
+    outline-offset: 3px;
+  }
+
+  .vinyl {
+    background:
+      radial-gradient(circle at center, #b76e79 0 18%, #2a0712 19% 21%, transparent 22%),
+      repeating-radial-gradient(circle at center, #16030a 0 1px, #2a0712 1.5px 3px),
+      #16030a;
+    box-shadow: inset 0 0 0 1px rgba(247, 231, 206, 0.2);
+  }
+  .vinyl::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: conic-gradient(from 30deg, transparent 0 20%, rgba(255, 255, 255, 0.18) 25%, transparent 32% 70%, rgba(255, 255, 255, 0.12) 75%, transparent 82%);
+  }
+
+  /* Textured letter paper */
+  .paper {
+    background-color: #fdf6ea;
+    background-image:
+      radial-gradient(ellipse at top left, rgba(247, 231, 206, 0.9), transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(248, 215, 218, 0.55), transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.8) inset,
+      0 30px 80px -30px rgba(74, 14, 31, 0.45),
+      0 8px 20px -10px rgba(74, 14, 31, 0.25);
+  }
+}
+
+/* Film grain overlay */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 65;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+  mix-blend-mode: multiply;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  30% { transform: translate(3%, -15%); }
+  50% { transform: translate(12%, 9%); }
+  70% { transform: translate(9%, 4%); }
+  90% { transform: translate(-1%, 7%); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+
+.flame {
+  transform-box: fill-box;
+  transform-origin: 50% 90%;
+}
+
+.perspective {
+  perspective: 1200px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain {
+    animation: none;
+  }
+}
